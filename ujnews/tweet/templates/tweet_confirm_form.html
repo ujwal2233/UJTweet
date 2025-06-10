@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    UJ News
+{% endblock  %}
+
+{% block content%}
+<h1 class="text-center mt-5">You want to delete the tweet?</h1>
+
+<form method="post" class='form'>
+    {% csrf_token %}
+    <p>Are you sure you want to delete the tweet: <strong>{{ tweet.text }}</strong>?</p>
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>    
+    <a href="{% url 'tweet_list' %}" class="btn btn-success">Cancel</a>
+{% endblock %}

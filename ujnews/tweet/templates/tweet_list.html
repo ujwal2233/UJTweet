@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    UJ News
+{% endblock  %}
+
+{% block content %}
+<h1 class="text-center mt-5">Welcome to UJ Twitter</h1>
+
+<form method="get" action="" class="mb-3">
+    <input type="text" name="q" placeholder="Search tweets..." value="{{ query|default:'' }}" class="form-control" style="width: 300px; display: inline-block;">
+    <button type="submit" class="btn btn-secondary">Search</button>
+</form>
+
+<a class="btn btn-primary" href="{% url 'tweet_create' %}">Create a tweet</a>
+<div class="container row gap-3 mt-3">
+    {% for tweet in tweets %}
+    <div class="card" style="width: 18rem;">
+        {% if tweet.photo %}
+            <img src="{{ tweet.photo.url }}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ tweet.user.username }}</h5>
+            <p class="card-text">{{ tweet.text }}</p>
+            {% if user.is_authenticated and tweet.user == user %}
+                <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
